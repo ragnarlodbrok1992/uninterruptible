@@ -17,13 +17,15 @@ fn main() -> eframe::Result {
             ),
         ..Default::default()
     };
+
     eframe::run_native(
-        "eframe template",
+        "Uninterruptible",
         native_options,
-        Box::new(|cc| Ok(Box::new(eframe_template::TemplateApp::new(cc)))),
+        Box::new(|cc| Ok(Box::new(uninterruptible::Uninterruptible::new(cc)))),
     )
 }
 
+/* TODO we do not care for WASM for now
 // When compiling to web using trunk:
 #[cfg(target_arch = "wasm32")]
 fn main() {
@@ -50,7 +52,7 @@ fn main() {
             .start(
                 canvas,
                 web_options,
-                Box::new(|cc| Ok(Box::new(eframe_template::TemplateApp::new(cc)))),
+                Box::new(|cc| Ok(Box::new(uninterruptible::Uninterruptible::new(cc)))),
             )
             .await;
 
@@ -70,3 +72,4 @@ fn main() {
         }
     });
 }
+*/
