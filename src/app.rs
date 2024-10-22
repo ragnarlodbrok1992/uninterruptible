@@ -1,24 +1,13 @@
-use egui::util::cache::{ComputerMut, FrameCache};
-
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
 pub struct Uninterruptible {
-    // Example stuff:
-    // label: String,
-
-    // TODO put stuff here for global context passable state
-    // this might not be it tho...
-    // command_buffer: String,
 
     // #[serde(skip)] // This how you opt-out of serialization of a field
     // value: f32,
+    #[serde(skip)]
+    command_buffer: String,
 }
-
-// Memory for application - persistent, between frames etc
-// --> https://docs.rs/egui/latest/egui/struct.Memory.html#structfield.data
-// Holy shit, this is absurd...
-
 
 impl Uninterruptible {
     /// Called once before the first frame.
@@ -44,18 +33,13 @@ impl eframe::App for Uninterruptible {
 
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        // Put your widgets into a `SidePanel`, `TopBottomPanel`, `CentralPanel`, `Window` or `Area`.
-        // For inspiration and more examples, go to https://emilk.github.io/egui
-        // TODO put widgets here
-        let mut hello_world = String::new();
+        // Taking stuff out of Default TODO check this out
+        let Self {command_buffer} = self;
 
         // Running every frame application loop
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("Uninterruptible - focus work application");
-
-            // TODO put text field that inputs commands for application
-            // TODO check how to storage strings? show I use context?
-            ui.text_edit_singleline(&mut hello_world);
+            ui.text_edit_singleline(command_buffer);
         });
     }
 }
@@ -63,10 +47,7 @@ impl eframe::App for Uninterruptible {
 impl Default for Uninterruptible {
     fn default() -> Self {
         Self {
-            // Example stuff:
-            // label: "Hello World!".to_owned(),
-            // value: 2.7,
-            // command_buffer: String::new(),
+            command_buffer: String::new(),
         }
     }
 }
