@@ -33,7 +33,10 @@ impl eframe::App for Uninterruptible {
 
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        // Taking stuff out of Default TODO check this out
+        // TODO work on input - only show command input when user asks to
+        // TODO implement text explaining what is going on
+
+        // Taking stuff out of Default TODO check this out also Self and derive
         let Self {command_buffer} = self;
 
         // Running every frame application loop
